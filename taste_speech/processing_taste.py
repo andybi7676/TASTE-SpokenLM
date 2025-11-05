@@ -228,7 +228,10 @@ class TasteProcessor(ProcessorMixin):
         assert sampling_rate == 16000
 
         if self.extract_speaker_embed_on:
-            speaker_embed = self._get_speaker_embed(self.speaker_embed_onnx_session, ref_audio_list)
+            if kwargs.get('speaker_embed', None) is not None:
+                speaker_embed = kwargs.pop('speaker_embed')
+            else:
+                speaker_embed = self._get_speaker_embed(self.speaker_embed_onnx_session, ref_audio_list)
             data.update(
                 {
                     'speaker_embeds': torch.tensor([speaker_embed], dtype=torch.float32)
@@ -251,7 +254,7 @@ class TasteProcessor(ProcessorMixin):
         })
 
         words = None
-        text = None
+        text = text
         if self.asr_on:
             result = self.asr_pipeline(
                 {'raw': audio, 'sampling_rate': sampling_rate},

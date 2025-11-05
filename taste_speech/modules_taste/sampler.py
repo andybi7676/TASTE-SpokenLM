@@ -56,6 +56,7 @@ class TasteSampler:
             elif '\n' in _subword:
                 self.ban_ids.append(i)
         self.ban_ids.append(128001)  # end of sentence
+        self.ban_ids.append(364)    # " \'" --> causes issues during encode-decoding
 
     def _top_p_filtering(self, logits, top_p):
         sorted_logits, sorted_indices = torch.sort(logits, dim=-1, descending=True)

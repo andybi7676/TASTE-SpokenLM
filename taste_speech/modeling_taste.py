@@ -1736,6 +1736,7 @@ class TasteForCausalLM(TastePreTrainedModel, GenerationMixin):
 
         if debug:
             debug_print(generated_llm_indices, 'generated_llm_indices')
+            debug_print(generated_llm_token_ids, 'generated_llm_token_ids')
             debug_print(generated_llm_word_ids, 'generated_llm_word_ids')
 
         # process on generated part
